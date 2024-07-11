@@ -99,8 +99,7 @@ export const checkOAuth2 = async (
     const request = new Request(req)
     const response = new Response(res)
 
-    const a = await OAuth2.authenticate(request, response)
-    console.log(a)
+    await OAuth2.authenticate(request, response)
 
     return next()
   } catch (error) {

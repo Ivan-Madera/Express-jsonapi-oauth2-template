@@ -32,9 +32,13 @@ export const createUser: Handler = async (req, res) => {
   let status = Codes.errorServer
 
   try {
-    const { body } = req
+    const {
+      body: {
+        data: { attributes }
+      }
+    } = req
 
-    const userService = await createUserService(body)
+    const userService = await createUserService(attributes)
 
     status = userService.code
     return res.status(status).json(userService)

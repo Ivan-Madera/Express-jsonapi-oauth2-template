@@ -83,28 +83,37 @@ router.get('/users', [checkBearer], getUsers)
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         application/vnd.api+json:
  *           schema:
  *             type: object
  *             properties:
- *               nombres:
- *                 type: string
- *               apellido_paterno:
- *                 type: string
- *               apellido_materno:
- *                 type: string
- *               usuario:
- *                 type: string
- *               contrasenia:
- *                 type: string
- *               correo:
- *                 type: string
- *               telefono:
- *                 type: string
- *               genero:
- *                 type: string
- *               estado_civil:
- *                 type: string
+ *               data:
+ *                 type: object
+ *                 properties:
+ *                   type:
+ *                     type: string
+ *                     default: create-user
+ *                   attributes:
+ *                     type: object
+ *                     properties:
+ *                       nombres:
+ *                         type: string
+ *                       apellido_paterno:
+ *                         type: string
+ *                       apellido_materno:
+ *                         type: string
+ *                       usuario:
+ *                         type: string
+ *                       contrasenia:
+ *                         type: string
+ *                       correo:
+ *                         type: string
+ *                       telefono:
+ *                         type: string
+ *                       genero:
+ *                         type: string
+ *                       estado_civil:
+ *                         type: string
  *             required:
  *               - nombres
  *               - apellido_paterno

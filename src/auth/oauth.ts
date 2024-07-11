@@ -30,12 +30,12 @@ const OAuth2 = new OAuth2Server({
 
       return {
         accessToken,
-        accessTokenExpiresAt: new Date('2024-07-11T17:13:40.785Z'),
+        accessTokenExpiresAt: new Date('2024-07-12T17:13:40.785Z'),
         client: {
           id: usuario.id_usuario.toString(),
           grants: ['password']
         },
-        user: {}
+        user: usuario
       }
     },
     getClient: async (clientId, clientSecret) => {
@@ -58,7 +58,7 @@ const OAuth2 = new OAuth2Server({
     saveToken: async (token, client, user) => {
       console.log('ejecutando saveToken')
       await Token.create({
-        id_usuario: +client.id,
+        id_usuario: +user.id_usuario,
         token: token.accessToken
       })
 

@@ -9,7 +9,7 @@ module.exports = {
           nombres: 'User',
           apellido_paterno: 'Example',
           usuario: 'user-example',
-          contrasenia: 'password-example',
+          contrasenia: 'fO1F//c1CF8PNnLHuSwvJJ2noNPAUPbUmATbUfDAeuM=',
           correo: 'email@example.mx',
           telefono: '+52999999999',
           genero: 'No definido',

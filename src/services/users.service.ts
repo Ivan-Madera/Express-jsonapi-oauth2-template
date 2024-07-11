@@ -22,6 +22,7 @@ import {
   SuccessObject
 } from '../utils/JsonResponses'
 import { sign } from 'jsonwebtoken'
+import { encode } from '../utils/Encode'
 
 export const getAccessTokenService = async (): Promise<
   ISuccessObject | IErrorObject
@@ -64,7 +65,20 @@ export const createUserService = async (
   const t = await manageTransaction()
 
   try {
-    const findCreate = await createUser(userObj, t)
+    const findCreate = await createUser(
+      {
+        nombres: userObj.nombres,
+        apellido_paterno: userObj.apellido_paterno,
+        apellido_materno: userObj.apellido_materno,
+        usuario: userObj.usuario,
+        contrasenia: encode(userObj.contrasenia),
+        correo: userObj.correo,
+        telefono: userObj.telefono,
+        genero: userObj.genero,
+        estado_civil: userObj.estado_civil
+      },
+      t
+    )
 
     await commitTrasaction(t)
     status = Codes.success
