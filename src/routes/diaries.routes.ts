@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { diaries, diariesCreate } from '../controllers/diaries.controller'
+import { checkOAuth2 } from '../middlewares/authentication'
 const router = Router()
 
 /**
@@ -23,7 +24,7 @@ const router = Router()
  *       500:
  *         description: Mensaje de error.
  */
-router.get('/diaries', [], diaries)
+router.get('/diaries', [checkOAuth2], diaries)
 
 /**
  * @swagger

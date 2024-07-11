@@ -5,6 +5,7 @@ import User from '../database/models/user.model'
 const OAuth2 = new OAuth2Server({
   model: {
     getAccessToken: async (accessToken) => {
+      console.log('ejecutando getAccessToken')
       const token = await Token.findOne({
         where: {
           token: accessToken
@@ -29,6 +30,7 @@ const OAuth2 = new OAuth2Server({
 
       return {
         accessToken,
+        accessTokenExpiresAt: new Date('2024-07-11T17:13:40.785Z'),
         client: {
           id: usuario.id_usuario.toString(),
           grants: ['password']
@@ -37,7 +39,7 @@ const OAuth2 = new OAuth2Server({
       }
     },
     getClient: async (clientId, clientSecret) => {
-      console.log(clientSecret)
+      console.log('ejecutando getClient')
       const usuario = await User.findOne({
         where: {
           id_usuario: clientId
@@ -54,6 +56,7 @@ const OAuth2 = new OAuth2Server({
       }
     },
     saveToken: async (token, client, user) => {
+      console.log('ejecutando saveToken')
       await Token.create({
         id_usuario: +client.id,
         token: token.accessToken
@@ -67,6 +70,7 @@ const OAuth2 = new OAuth2Server({
       }
     },
     getUser: async (username, password) => {
+      console.log('ejecutando getUser')
       return await User.findOne({
         where: {
           contrasenia: password,
