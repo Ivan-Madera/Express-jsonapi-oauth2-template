@@ -1,5 +1,6 @@
 import { DataTypes, type Model, type Optional } from 'sequelize'
 import { sequelize } from '../config'
+import Token from './token.model'
 
 interface UserAttributes {
   id_usuario: number
@@ -67,5 +68,7 @@ const User = sequelize.define<UserInstance>(
     tableName: 'db_usuarios'
   }
 )
+
+User.hasMany(Token, { foreignKey: 'id_usuario', as: 'tkn' })
 
 export default User
