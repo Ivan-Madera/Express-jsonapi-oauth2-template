@@ -13,27 +13,15 @@ export const diaries: Handler = (req, res) => {
 export const diariesCreate: Handler = async (req, res) => {
   const url = req.originalUrl
   let status = Codes.errorServer
-  console.log(0)
 
   try {
     const request = new Request(req)
-    console.log(request)
     const response = new Response(res)
 
-    console.log(1)
-    OAuth2.token(request, response)
-      .then((token) => {
-        console.log(2)
-        console.log('token', token)
-        return token
-      })
-      .catch((err) => {
-        console.log(3)
-        throw new Error(err || 'Mamo el tokenizado')
-      })
+    const tokenizado = await OAuth2.token(request, response)
 
     status = Codes.success
-    res.status(status).json({})
+    res.status(status).json({ data: tokenizado })
   } catch (error) {
     res
       .status(status)
