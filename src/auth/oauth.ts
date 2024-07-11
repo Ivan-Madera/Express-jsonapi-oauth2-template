@@ -2,7 +2,7 @@ import OAuth2Server from '@node-oauth/oauth2-server'
 import Token from '../database/models/token.model'
 import User from '../database/models/user.model'
 
-export const OAuth2 = new OAuth2Server({
+const OAuth2 = new OAuth2Server({
   model: {
     getAccessToken: async (accessToken) => {
       const token = await Token.findOne({
@@ -54,9 +54,8 @@ export const OAuth2 = new OAuth2Server({
       }
     },
     saveToken: async (token, client, user) => {
-      console.log(client.id)
       await Token.create({
-        id_usuario: user.id,
+        id_usuario: +client.id,
         token: token.accessToken
       })
 
@@ -75,5 +74,9 @@ export const OAuth2 = new OAuth2Server({
         }
       })
     }
-  }
+  },
+  accessTokenLifetime: 60 * 60,
+  allowBearerTokensInQueryString: true
 })
+
+export default OAuth2

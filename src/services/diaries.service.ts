@@ -28,10 +28,6 @@ export const createDiaries = (
 
     diariesData.push(newDiary)
 
-    // status = Codes.badRequest
-    // throw new Error('Falló la cosa')
-
-    // eslint-disable-next-line no-unreachable
     status = Codes.success
     return JsonResponseApiGeneric(
       status,

@@ -34,7 +34,7 @@ class Server {
   middlewares(): void {
     this.app.use(cors())
     this.app.use(express.json({ type: 'application/vnd.api+json' }))
-    this.app.use(express.urlencoded({ extended: true }))
+    this.app.use(express.urlencoded({ extended: false }))
   }
 
   swagger(): void {

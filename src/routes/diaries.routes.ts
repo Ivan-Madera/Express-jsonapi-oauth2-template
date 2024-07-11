@@ -1,7 +1,5 @@
 import { Router } from 'express'
 import { diaries, diariesCreate } from '../controllers/diaries.controller'
-import { diariesCreateValidator } from '../validators/diaries.validators'
-import { jsonAPIValidator } from '../middlewares/authentication'
 const router = Router()
 
 /**
@@ -71,10 +69,6 @@ router.get('/diaries', [], diaries)
  *       500:
  *         description: Mensaje de error.
  */
-router.post(
-  '/diaries',
-  [jsonAPIValidator, ...diariesCreateValidator],
-  diariesCreate
-)
+router.post('/diaries', [], diariesCreate)
 
 export default router
