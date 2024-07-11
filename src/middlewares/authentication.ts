@@ -82,20 +82,9 @@ export const checkOAuth2 = async (
   next: any
 ): Promise<any> => {
   const url = req.originalUrl
-  let status = Codes.errorServer
+  const status = Codes.unauthorized
 
   try {
-    const auth = req.get('Authorization')
-    const secret = env.SECRET_KEY as string
-
-    if (!auth || !secret || !auth.startsWith('Bearer ')) {
-      status = Codes.unauthorized
-      throw new Error('Usuario no autorizado')
-    }
-
-    const token = auth.slice(7)
-    console.log(token)
-
     const request = new Request(req)
     const response = new Response(res)
 

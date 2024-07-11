@@ -1,11 +1,12 @@
 import { DataTypes, type Model, type Optional } from 'sequelize'
 import { sequelize } from '../config'
-import User from './user.model'
 
 interface TokenAttributes {
   id_token: number
   id_usuario: number
-  token: string
+  id_cliente: number
+  accessToken: string
+  accessTokenExpiresAt: Date | null
 }
 
 export interface TokenCreationAttributes
@@ -16,7 +17,7 @@ export interface TokenInstance
     TokenAttributes {}
 
 const Token = sequelize.define<TokenInstance>(
-  'db_token',
+  'db_tokens',
   {
     id_token: {
       allowNull: false,
@@ -27,20 +28,28 @@ const Token = sequelize.define<TokenInstance>(
     id_usuario: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'db_usuario',
+        model: 'db_usuarios',
         key: 'id_usuario'
       }
     },
-    token: {
+    id_cliente: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'db_clientes',
+        key: 'id_cliente'
+      }
+    },
+    accessToken: {
       type: DataTypes.STRING
+    },
+    accessTokenExpiresAt: {
+      type: DataTypes.DATE
     }
   },
   {
     timestamps: false,
-    tableName: 'db_token'
+    tableName: 'db_tokens'
   }
 )
-
-Token.hasOne(User, { foreignKey: 'id_usuario', as: 'usr' })
 
 export default Token

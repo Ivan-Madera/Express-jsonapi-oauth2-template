@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('db_token', {
+    return queryInterface.createTable('db_tokens', {
       id_token: {
         allowNull: false,
         autoIncrement: true,
@@ -17,14 +17,25 @@ module.exports = {
           key: 'id_usuario'
         }
       },
-      token: {
+      id_cliente: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'db_clientes',
+          key: 'id_cliente'
+        }
+      },
+      accessToken: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      accessTokenExpiresAt: {
+        type: Sequelize.DATE
       }
     })
   },
 
   down: (queryInterface) => {
-    return queryInterface.dropTable('db_token')
+    return queryInterface.dropTable('db_tokens')
   }
 }
