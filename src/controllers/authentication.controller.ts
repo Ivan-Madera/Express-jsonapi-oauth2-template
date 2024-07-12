@@ -13,27 +13,17 @@ export const getAccessToken: Handler = async (req, res) => {
   let status = Codes.errorServer
 
   try {
-    req.headers['content-type'] = 'application/x-www-form-urlencoded'
-
     const {
       body: {
         data: { attributes }
       }
     } = req
 
-    const requestRequired = {
-      method: req.method,
-      query: req.query,
-      headers: {
-        ...req.headers
-      },
-      body: {
-        ...attributes
-      }
-    }
+    req.headers['content-type'] = 'application/x-www-form-urlencoded'
+    req.body = attributes
 
     console.log(req.query)
-    const request = new Request(requestRequired)
+    const request = new Request(req)
     const response = new Response(res)
 
     const tokenizado = await OAuth2.token(request, response)
