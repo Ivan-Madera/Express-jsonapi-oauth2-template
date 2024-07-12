@@ -3,6 +3,7 @@ import env from './callenv'
 import cors from 'cors'
 import Diaries from './../routes/diaries.routes'
 import Users from './../routes/users.routes'
+import Auth from './../routes/authentication'
 import swaggerUI from 'swagger-ui-express'
 import swaggerJSDoc from 'swagger-jsdoc'
 import { options } from './swagger'
@@ -48,6 +49,7 @@ class Server {
   routes(): void {
     this.app.use(this.pathV1, Diaries)
     this.app.use(this.pathV1, Users)
+    this.app.use(this.pathV1, Auth)
   }
 
   listen(): void {

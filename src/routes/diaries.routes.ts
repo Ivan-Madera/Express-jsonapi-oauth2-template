@@ -5,8 +5,20 @@ const router = Router()
 
 /**
  * @swagger
+ * components:
+ *  securitySchemes:
+ *    OAuth2:            # arbitrary name for the security scheme
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
+ */
+
+/**
+ * @swagger
  * /api/diaries:
  *   get:
+ *     security:
+ *     - OAuth2: []
  *     tags: [Diaries]
  *     summary: Obtener informacion de los viajes
  *     description: Obtiene la información relevante de los viajes.
