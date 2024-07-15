@@ -6,7 +6,8 @@ module.exports = {
       'db_clientes',
       [
         {
-          aplicativo: 'Panel-Macrolock'
+          aplicativo: 'Panel-Macrolock',
+          secret: 'TnOMpVY8Bs/QAYKZkz1Y2x3Yv5f2lz3Jm/bNxktVUL0='
         }
       ],
       {}

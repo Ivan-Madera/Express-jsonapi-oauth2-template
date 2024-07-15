@@ -4,6 +4,7 @@ import { sequelize } from '../config'
 interface ClientAttributes {
   id_cliente: number
   aplicativo: string
+  secret: string
 }
 
 export interface ClientCreationAttributes
@@ -23,6 +24,9 @@ const Client = sequelize.define<ClientInstance>(
       type: DataTypes.INTEGER
     },
     aplicativo: {
+      type: DataTypes.STRING
+    },
+    secret: {
       type: DataTypes.STRING
     }
   },

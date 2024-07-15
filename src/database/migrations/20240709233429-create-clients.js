@@ -12,6 +12,10 @@ module.exports = {
       aplicativo: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      secret: {
+        type: Sequelize.STRING,
+        allowNull: false
       }
     })
   },

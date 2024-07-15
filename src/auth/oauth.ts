@@ -3,11 +3,13 @@ import Token from '../database/models/token.model'
 import User from '../database/models/user.model'
 import { encode } from '../utils/Encode'
 import Client from '../database/models/client.model'
+import { LogMessage } from '../utils/ConsoleLogger'
 
 const OAuth2 = new OAuth2Server({
   model: {
     getAccessToken: async (accessToken) => {
-      console.log('Ejecutando getAccessToken')
+      LogMessage('Ejecutando la funcion getAccessToken')
+
       const token = await Token.findOne({
         where: {
           accessToken
@@ -49,11 +51,12 @@ const OAuth2 = new OAuth2Server({
       }
     },
     getClient: async (clientId, clientSecret) => {
-      console.log('Ejecutando getClient')
-      console.log(encode(clientSecret))
+      LogMessage('Ejecutando la funcion getClient')
+
       const cliente = await Client.findOne({
         where: {
-          id_cliente: +clientId
+          id_cliente: +clientId,
+          secret: encode(clientSecret)
         }
       })
 
@@ -67,7 +70,8 @@ const OAuth2 = new OAuth2Server({
       }
     },
     saveToken: async (token, client, user) => {
-      console.log('Ejecutando saveToken')
+      LogMessage('Ejecutando la funcion saveToken')
+
       await Token.destroy({
         where: {
           id_usuario: +user.id_usuario,
@@ -90,7 +94,8 @@ const OAuth2 = new OAuth2Server({
       }
     },
     getUser: async (username, password) => {
-      console.log('Ejecutando getUser')
+      LogMessage('Ejecutando la funcion getUser')
+
       return await User.findOne({
         where: {
           contrasenia: encode(password),
@@ -99,7 +104,7 @@ const OAuth2 = new OAuth2Server({
       })
     }
   },
-  accessTokenLifetime: 60 * 60,
+  accessTokenLifetime: 60 * 6,
   allowBearerTokensInQueryString: true
 })
 
