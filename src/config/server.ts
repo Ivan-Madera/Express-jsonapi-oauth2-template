@@ -1,5 +1,4 @@
 import express, { type Application } from 'express'
-import env from './callenv'
 import cors from 'cors'
 import Diaries from './../routes/diaries.routes'
 import Users from './../routes/users.routes'
@@ -9,6 +8,7 @@ import swaggerJSDoc from 'swagger-jsdoc'
 import { options } from './swagger'
 import { sequelize } from '../database/config'
 import helmet from 'helmet'
+import { env } from './callenv'
 
 class Server {
   public app: Application
