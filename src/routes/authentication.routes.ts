@@ -38,7 +38,7 @@ const router = Router()
  *                          default: 1
  *                        client_secret:
  *                          type: string
- *                          default: secret
+ *                          default: s3cr3t
  *     responses:
  *       200:
  *         description: Request exitoso.

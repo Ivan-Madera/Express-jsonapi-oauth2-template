@@ -5,7 +5,19 @@ import { JsonResponseApiError } from '../utils/JsonResponseApi'
 import { ErrorSugestions } from '../utils/ErrorSugestions'
 
 export const diaries: Handler = (req, res) => {
-  return res.send(getDiaries())
+  const url = req.originalUrl
+  let status = Codes.errorServer
+
+  try {
+    const diariesService = getDiaries(url)
+
+    status = diariesService.status
+    res.status(status).json(diariesService.response)
+  } catch (error) {
+    res
+      .status(status)
+      .json(JsonResponseApiError(status, url, ErrorSugestions.generic, error))
+  }
 }
 
 export const diariesCreate: Handler = (req, res) => {

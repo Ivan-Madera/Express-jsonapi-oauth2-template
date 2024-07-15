@@ -1,34 +1,27 @@
 import { type Handler } from 'express'
-import {
-  createUserService,
-  getAccessTokenService,
-  getUsersService,
-  updateUserService
-} from '../services/users.service'
+import { createUserService, getUsersService } from '../services/users.service'
 import { Codes } from '../utils/CodeStatus'
-import { ErrorObject } from '../utils/JsonResponses'
+import { JsonResponseApiError } from '../utils/JsonResponseApi'
+import { ErrorSugestions } from '../utils/ErrorSugestions'
 
-export const getAccessToken: Handler = async (req, res) => {
+export const getUsers: Handler = async (req, res) => {
+  const url = req.originalUrl
   let status = Codes.errorServer
 
   try {
-    const userService = await getAccessTokenService()
+    const usersService = await getUsersService(url)
 
-    status = userService.code
-    return res.status(status).json(userService)
+    status = usersService.status
+    res.status(status).json(usersService.response)
   } catch (error) {
-    return res.status(status).json(ErrorObject(error, status))
+    res
+      .status(status)
+      .json(JsonResponseApiError(status, url, ErrorSugestions.generic, error))
   }
 }
 
-export const getUsers: Handler = async (req, res) => {
-  const userService: any = await getUsersService()
-
-  const status = userService.code
-  res.status(status).json(userService)
-}
-
 export const createUser: Handler = async (req, res) => {
+  const url = req.originalUrl
   let status = Codes.errorServer
 
   try {
@@ -38,28 +31,13 @@ export const createUser: Handler = async (req, res) => {
       }
     } = req
 
-    const userService = await createUserService(attributes)
+    const usersService = await createUserService(url, attributes)
 
-    status = userService.code
-    return res.status(status).json(userService)
+    status = usersService.status
+    res.status(status).json(usersService.response)
   } catch (error) {
-    return res.status(status).json(ErrorObject(error, status))
-  }
-}
-
-export const updateUser: Handler = async (req, res) => {
-  let status = Codes.errorServer
-
-  try {
-    const { body } = req
-    const nombres = body.nombres
-    const usuario = body.usuario
-
-    const userService = await updateUserService(nombres, usuario)
-
-    status = userService.code
-    return res.status(status).json(userService)
-  } catch (error) {
-    return res.status(status).json(ErrorObject(error, status))
+    res
+      .status(status)
+      .json(JsonResponseApiError(status, url, ErrorSugestions.generic, error))
   }
 }

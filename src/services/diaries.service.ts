@@ -12,7 +12,24 @@ import {
 } from '../utils/JsonResponseApi'
 import diariesData from './../json/diaries.json'
 
-export const getDiaries = (): IDiaryObject[] => diariesData as IDiaryObject[]
+export const getDiaries = (url: string): IJsonResponseApiGeneric => {
+  let status = Codes.errorServer
+
+  try {
+    const diaries = diariesData as IDiaryObject[]
+
+    status = Codes.success
+    return JsonResponseApiGeneric(
+      status,
+      JsonResponseApiData('diaries', diaries, url)
+    )
+  } catch (error) {
+    return JsonResponseApiGeneric(
+      status,
+      JsonResponseApiError(status, url, ErrorSugestions.generic, error)
+    )
+  }
+}
 
 export const createDiaries = (
   url: string,
