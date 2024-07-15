@@ -85,11 +85,14 @@ export const checkOAuth2 = async (
   const status = Codes.unauthorized
 
   try {
+    req.headers['content-type'] = 'application/x-www-form-urlencoded'
+
     const request = new Request(req)
     const response = new Response(res)
 
     await OAuth2.authenticate(request, response)
 
+    req.headers['content-type'] = 'application/vnd.api+json'
     return next()
   } catch (error) {
     return res

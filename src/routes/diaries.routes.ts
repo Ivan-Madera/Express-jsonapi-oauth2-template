@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { diaries, diariesCreate } from '../controllers/diaries.controller'
-import { checkOAuth2 } from '../middlewares/authentication'
+import { checkOAuth2, jsonAPIValidator } from '../middlewares/authentication'
 const router = Router()
 
 /**
@@ -42,6 +42,8 @@ router.get('/diaries', [checkOAuth2], diaries)
  * @swagger
  * /api/diaries:
  *   post:
+ *     security:
+ *     - OAuth2: []
  *     tags: [Diaries]
  *     summary: Crea una nuevo diario de viaje
  *     requestBody:
@@ -82,6 +84,6 @@ router.get('/diaries', [checkOAuth2], diaries)
  *       500:
  *         description: Mensaje de error.
  */
-router.post('/diaries', [], diariesCreate)
+router.post('/diaries', [jsonAPIValidator, checkOAuth2], diariesCreate)
 
 export default router

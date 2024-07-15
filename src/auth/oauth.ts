@@ -48,8 +48,9 @@ const OAuth2 = new OAuth2Server({
         user: usuario.dataValues
       }
     },
-    getClient: async (clientId, _clientSecret) => {
+    getClient: async (clientId, clientSecret) => {
       console.log('Ejecutando getClient')
+      console.log(encode(clientSecret))
       const cliente = await Client.findOne({
         where: {
           id_cliente: +clientId

@@ -1,27 +1,28 @@
 import { type Handler } from 'express'
-import { getDiaries } from '../services/diaries.service'
+import { createDiaries, getDiaries } from '../services/diaries.service'
 import { Codes } from '../utils/CodeStatus'
 import { JsonResponseApiError } from '../utils/JsonResponseApi'
 import { ErrorSugestions } from '../utils/ErrorSugestions'
-import OAuth2 from '../auth/oauth'
-import { Request, Response } from '@node-oauth/oauth2-server'
 
 export const diaries: Handler = (req, res) => {
   return res.send(getDiaries())
 }
 
-export const diariesCreate: Handler = async (req, res) => {
+export const diariesCreate: Handler = (req, res) => {
   const url = req.originalUrl
   let status = Codes.errorServer
 
   try {
-    const request = new Request(req)
-    const response = new Response(res)
+    const {
+      body: {
+        data: { attributes }
+      }
+    } = req
 
-    const tokenizado = await OAuth2.token(request, response)
+    const diariesService = createDiaries(url, attributes)
 
-    status = Codes.success
-    res.status(status).json({ data: tokenizado })
+    status = diariesService.status
+    res.status(status).json(diariesService.response)
   } catch (error) {
     res
       .status(status)

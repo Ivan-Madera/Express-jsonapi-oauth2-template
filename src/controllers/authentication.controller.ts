@@ -22,7 +22,6 @@ export const getAccessToken: Handler = async (req, res) => {
     req.headers['content-type'] = 'application/x-www-form-urlencoded'
     req.body = attributes
 
-    console.log(req.query)
     const request = new Request(req)
     const response = new Response(res)
 

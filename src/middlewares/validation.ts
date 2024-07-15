@@ -15,7 +15,6 @@ export const validateResult = (req: any, res: any, next: any): any => {
     const msg = `Valor invalido en ${err.path as string} dentro del ${
       err.location as string
     }`
-    console.log()
     res
       .status(status)
       .json(JsonResponseApiValidator(status, url, ErrorSugestions.generic, msg))
